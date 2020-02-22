@@ -93,7 +93,7 @@ plt.plot(1000, 1000, marker='o', linestyle='none', color='r', label='LIGO (pre-m
 plt.plot(1000, 1000, marker='o', linestyle='none', color='b', label='LIGO (post-merger)')
 plt.xlim(0, 85)
 plt.ylabel('Year of discovery')
-plt.xlabel('Mass ($M_\odot$)')s
+plt.xlabel('Mass ($M_\odot$)')
 plt.ylim(years[0], years[-1])
 plt.legend()
 
