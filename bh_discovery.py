@@ -68,14 +68,34 @@ frames = []
 fig = plt.figure()
 
 for yy in years:
-    bh_list = [bh for bh in bh_dict if bh_dict[bh]['Year'] < yy]
-    bh_mass = [bh_dict[bh]['Mass'] for bh in bh_list]
-    bh_year = [bh_dict[bh]['Year'] for bh in bh_list]
-    frame = plt.plot(bh_mass, bh_year, 'k.')
-    frames.append(frame)
+    xrb_list = [bh for bh in bh_dict if ((bh_dict[bh]['Year'] < yy) & 
+                                         (bh_dict[bh]['Method'] == 'XRB'))]
+    ligopre_list = [bh for bh in bh_dict if ((bh_dict[bh]['Year'] < yy) & 
+                                             (bh_dict[bh]['Method'] == 'LIGOpre'))]
+    ligopost_list = [bh for bh in bh_dict if ((bh_dict[bh]['Year'] < yy) & 
+                                              (bh_dict[bh]['Method'] == 'LIGOpost'))]
+    xrb_mass = [bh_dict[bh]['Mass'] for bh in xrb_list]
+    xrb_year = [bh_dict[bh]['Year'] for bh in xrb_list]
+    ligopre_mass = [bh_dict[bh]['Mass'] for bh in ligopre_list]
+    ligopre_year = [bh_dict[bh]['Year'] for bh in ligopre_list]
+    ligopost_mass = [bh_dict[bh]['Mass'] for bh in ligopost_list]
+    ligopost_year = [bh_dict[bh]['Year'] for bh in ligopost_list]
+    frame1 = plt.scatter(xrb_mass, xrb_year, s=np.array(xrb_mass), 
+                         marker='o', color='k')
+    frame2 = plt.scatter(ligopre_mass, ligopre_year, s=np.array(ligopre_mass), 
+                         marker='o', color='r')
+    frame3 = plt.scatter(ligopost_mass, ligopost_year, s=np.array(ligopost_mass), 
+                         marker='o', color='b')
+    frames.append([frame1, frame2, frame3])
 
-plt.xlim(0, 100)
+plt.plot(1000, 1000, marker='o', linestyle='none', color='k', label='XRB')
+plt.plot(1000, 1000, marker='o', linestyle='none', color='r', label='LIGO (pre-merger)')
+plt.plot(1000, 1000, marker='o', linestyle='none', color='b', label='LIGO (post-merger)')
+plt.xlim(0, 85)
+plt.ylabel('Year of discovery')
+plt.xlabel('Mass ($M_\odot$)')s
 plt.ylim(years[0], years[-1])
+plt.legend()
 
 boop = ani.ArtistAnimation(fig, frames)        
 
